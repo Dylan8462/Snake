@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.28)
 project(Snake LANGUAGES CXX)
 
+if(MSVC)
+    add_compile_options(/FS)
+endif()
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 include(FetchContent)
@@ -15,9 +19,21 @@ FetchContent_MakeAvailable(SFML)
 add_executable(${PROJECT_NAME}
     src/Snake.cpp
     src/Game.cpp
-    )
+    src/Player.cpp
+    src/Body.cpp
+)
 
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/assets
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets
+)
+
+if(MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE /FS)
+endif()
+
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 target_link_libraries(${PROJECT_NAME} PRIVATE SFML::Graphics)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
