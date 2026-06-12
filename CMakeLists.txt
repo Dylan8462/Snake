@@ -20,18 +20,17 @@ add_executable(${PROJECT_NAME}
     src/Snake.cpp
     src/Game.cpp
     src/Player.cpp
-    src/Body.cpp
-)
+    src/Body.cpp)
+
+target_include_directories(${PROJECT_NAME}
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/assets
         $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets
 )
-
-if(MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE /FS)
-endif()
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 target_link_libraries(${PROJECT_NAME} PRIVATE SFML::Graphics)

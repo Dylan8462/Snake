@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 #include "Body.h"
 
@@ -26,7 +28,4 @@ private:
 	std::vector<Body> body;
 
 	sf::Vector2f vel;
-
-	int tick = 0;
-	int fps = 60;
 };
