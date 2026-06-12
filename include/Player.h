@@ -1,8 +1,6 @@
 #pragma once
 #include <vector>
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics.hpp>
 
 #include "Body.h"
 
@@ -10,6 +8,8 @@ class Player : public sf::Drawable
 {
 public:
 	Player(float);
+
+	void update(const sf::Vector2i&);
 
 	void addDot(float);
 
@@ -24,4 +24,9 @@ public:
 private:
 	float size;
 	std::vector<Body> body;
+
+	sf::Vector2f vel;
+
+	int tick = 0;
+	int fps = 60;
 };
